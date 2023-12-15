@@ -3,10 +3,11 @@ import { ScoreContext } from "../context/ScoreContext";
 
 const QuestionCard = ({ data }) => {
   const { setScore } = useContext(ScoreContext);
-
+  const [isAnswered, setIsAnswered] = useState(false);
   const optionslist = [data.answer, ...data.options];
 
   const onSelect = (event, number) => {
+    setIsAnswered(true);
     const clickedButton = event.target;
     if (number === data.answer) {
       setScore((prevScore) => prevScore + 1);
@@ -26,6 +27,7 @@ const QuestionCard = ({ data }) => {
       onClick={(event) => {
         onSelect(event, number);
       }}
+      disabled={isAnswered}
     >
       {number}
     </button>
