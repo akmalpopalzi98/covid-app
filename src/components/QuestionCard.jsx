@@ -1,8 +1,26 @@
+import { useContext, useState } from "react";
+import { ScoreContext } from "../context/ScoreContext";
+
 const QuestionCard = ({ data }) => {
+  const { score, setScore } = useContext(ScoreContext);
+  console.log(score);
   const optionslist = [data.answer, ...data.options];
+  const onSelect = (number) => {
+    if (number == data.answer) {
+      setScore((score) => score + 1);
+    } else {
+      setTries((tries) => tries - 1);
+    }
+  };
   const renderedItems = optionslist.map((number, index) => {
     return (
-      <button style={{ height: "90%", width: "20%" }} key={index}>
+      <button
+        style={{ height: "90%", width: "20%" }}
+        key={index}
+        onClick={() => {
+          onSelect(number);
+        }}
+      >
         {number}
       </button>
     );
@@ -20,6 +38,7 @@ const QuestionCard = ({ data }) => {
       <h1 style={{ textAlign: "center", paddingTop: "10px" }}>
         {data.question}
       </h1>
+
       <div
         style={{
           display: "flex",
