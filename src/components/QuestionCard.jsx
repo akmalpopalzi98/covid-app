@@ -2,29 +2,35 @@ import { useContext, useState } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 
 const QuestionCard = ({ data }) => {
-  const { score, setScore } = useContext(ScoreContext);
-  console.log(score);
+  const { setScore } = useContext(ScoreContext);
+
   const optionslist = [data.answer, ...data.options];
-  const onSelect = (number) => {
-    if (number == data.answer) {
-      setScore((score) => score + 1);
+
+  const onSelect = (event, number) => {
+    const clickedButton = event.target;
+    if (number === data.answer) {
+      setScore((prevScore) => prevScore + 1);
+      console.log(event.target);
+      clickedButton.style.backgroundColor = "green";
     } else {
-      setTries((tries) => tries - 1);
+      clickedButton.style.backgroundColor = "red";
     }
   };
-  const renderedItems = optionslist.map((number, index) => {
-    return (
-      <button
-        style={{ height: "90%", width: "20%" }}
-        key={index}
-        onClick={() => {
-          onSelect(number);
-        }}
-      >
-        {number}
-      </button>
-    );
-  });
+  const renderedItems = optionslist.map((number, index) => (
+    <button
+      key={index}
+      style={{
+        height: "90%",
+        width: "20%",
+      }}
+      onClick={(event) => {
+        onSelect(event, number);
+      }}
+    >
+      {number}
+    </button>
+  ));
+
   return (
     <div
       style={{
