@@ -1,21 +1,25 @@
 import { useContext, useState } from "react";
 import { ScoreContext } from "../context/ScoreContext";
+import Modal from "./Modal";
 
 const QuestionCard = ({ data }) => {
   const { setScore } = useContext(ScoreContext);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const optionslist = [data.answer, ...data.options];
 
   const onSelect = (event, number) => {
     setIsAnswered(true);
+    setOpenModal(true);
     const clickedButton = event.target;
     if (number === data.answer) {
       setScore((prevScore) => prevScore + 1);
-      console.log(event.target);
       clickedButton.style.backgroundColor = "green";
     } else {
       clickedButton.style.backgroundColor = "red";
     }
+
+    setTimeout();
   };
   const renderedItems = optionslist.map((number, index) => (
     <button
@@ -58,6 +62,7 @@ const QuestionCard = ({ data }) => {
         }}
       >
         {renderedItems}
+        {openModal && <Modal />}
       </div>
     </div>
   );
