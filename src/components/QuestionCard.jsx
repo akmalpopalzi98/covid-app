@@ -3,9 +3,9 @@ import { ScoreContext } from "../context/ScoreContext";
 import Modal from "./Modal";
 
 const QuestionCard = ({ data }) => {
-  const { setScore } = useContext(ScoreContext);
-  const [isAnswered, setIsAnswered] = useState(false);
+  const { setScore, isAnswered, setIsAnswered } = useContext(ScoreContext);
   const [openModal, setOpenModal] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(null);
   const optionslist = [data.answer, ...data.options];
 
   const onSelect = (event, number) => {
@@ -14,12 +14,12 @@ const QuestionCard = ({ data }) => {
     const clickedButton = event.target;
     if (number === data.answer) {
       setScore((prevScore) => prevScore + 1);
+      setIsCorrect(true);
       clickedButton.style.backgroundColor = "green";
     } else {
       clickedButton.style.backgroundColor = "red";
+      setIsCorrect(false);
     }
-
-    setTimeout();
   };
   const renderedItems = optionslist.map((number, index) => (
     <button
@@ -45,6 +45,7 @@ const QuestionCard = ({ data }) => {
         width: "90%",
         border: "solid 6px black",
         borderRadius: "20px",
+        position: "relative",
       }}
     >
       <h1 style={{ textAlign: "center", paddingTop: "10px" }}>
@@ -62,7 +63,13 @@ const QuestionCard = ({ data }) => {
         }}
       >
         {renderedItems}
-        {openModal && <Modal />}
+        {openModal && (
+          <Modal
+            detail={data.detail}
+            onExit={setOpenModal}
+            correctStatus={isCorrect}
+          />
+        )}
       </div>
     </div>
   );

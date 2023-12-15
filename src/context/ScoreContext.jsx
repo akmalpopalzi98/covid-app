@@ -4,7 +4,8 @@ const ScoreContext = createContext(0);
 
 const ScoreProvider = ({ children }) => {
   const [score, setScore] = useState(0);
-  const sharedValue = { score, setScore };
+  const [isAnswered, setIsAnswered] = useState(false);
+  const sharedValue = { score, setScore, isAnswered, setIsAnswered };
 
   return (
     <ScoreContext.Provider value={sharedValue}>

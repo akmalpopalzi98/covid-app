@@ -2,11 +2,30 @@ import "./app.css";
 import { GiHealthCapsule } from "react-icons/gi";
 import data from "./questions";
 import QuestionCard from "./components/QuestionCard";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ScoreContext } from "./context/ScoreContext";
 
 function App() {
-  const { score } = useContext(ScoreContext);
+  const { score, isAnswered } = useContext(ScoreContext);
+  const [index, setIndex] = useState(0);
+
+  const nextQuestion = () => {
+    // Check if the current question has been answered
+    if (isAnswered) {
+      // Check if there are more questions available
+      if (index + 1 < data.length) {
+        // Move to the next question
+        setIndex((prevIndex) => prevIndex + 1);
+      } else {
+        // Optionally, handle the case when there are no more questions
+        console.log("No more questions available");
+      }
+    } else {
+      // Optionally, handle the case when the current question hasn't been answered
+      console.log("Please answer the current question");
+    }
+  };
+
   return (
     <div style={{ backgroundColor: "#e59866", height: "100vh" }}>
       <h1 style={{ padding: "10px", backgroundColor: "#e5b966" }}>
@@ -33,7 +52,7 @@ function App() {
             position: "relative",
           }}
         >
-          <QuestionCard data={data[0]} />
+          <QuestionCard data={data[index]} />
           <div
             style={{
               position: "absolute",
@@ -59,6 +78,7 @@ function App() {
               right: 0,
               margin: "10px",
             }}
+            onClick={nextQuestion}
           >
             Next
           </button>
