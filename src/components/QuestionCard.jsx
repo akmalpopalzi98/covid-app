@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import Modal from "./Modal";
 
@@ -21,8 +21,17 @@ const QuestionCard = ({ data }) => {
       setIsCorrect(false);
     }
   };
+
+  useEffect(() => {
+    // Reset the isAnswered state when a new question is rendered
+    setIsAnswered(false);
+    const buttonElement = (document.getElementById(
+      "answer-btn"
+    ).style.backgroundColor = "");
+  }, [data]); // Trigger the effect when the data prop changes
   const renderedItems = optionslist.map((number, index) => (
     <button
+      id="answer-btn"
       key={index}
       style={{
         height: "90%",
