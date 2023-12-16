@@ -1,10 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import Modal from "./Modal";
+import { ModalContext } from "../context/ModalContext";
 
 const QuestionCard = ({ data }) => {
   const { setScore, isAnswered, setIsAnswered } = useContext(ScoreContext);
-  const [openModal, setOpenModal] = useState(false);
+  const { openModal, setOpenModal } = useContext(ModalContext);
+
   const [isCorrect, setIsCorrect] = useState(null);
   const [buttonColors, setButtonColors] = useState(
     Array(data.options.length).fill("")
