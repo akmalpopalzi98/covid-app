@@ -6,9 +6,12 @@ import { useContext, useState, useEffect, useMemo } from "react";
 import { ScoreContext } from "./context/ScoreContext";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
+import { ModalContext } from "./context/ModalContext";
 
 function App() {
   const { score, isAnswered } = useContext(ScoreContext);
+  const { openModal, setOpenModal } = useContext(ModalContext);
+
   const [index, setIndex] = useState(0);
   const [init, setInit] = useState(false);
 
@@ -170,7 +173,7 @@ function App() {
               width: "70px", // Adjust the size as needed
               height: "40px", // Adjust the size as needed
               borderRadius: "6px",
-              backgroundColor: "red", // Set the background color
+              backgroundColor: "purple", // Set the background color
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -185,9 +188,18 @@ function App() {
               position: "absolute",
               bottom: 0,
               right: 0,
+              width: "70px", // Adjust the size as needed
+              height: "40px", // Adjust the size as needed
               margin: "10px",
+              borderRadius: "6px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "black", // Set the text color
+              fontWeight: "bold",
             }}
             onClick={nextQuestion}
+            disabled={openModal}
           >
             Next
           </button>
