@@ -2,10 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import Modal from "./Modal";
 import { ModalContext } from "../context/ModalContext";
+import { QuestionContext } from "../context/QuestionContext";
 
 const QuestionCard = ({ data }) => {
   const { setScore, isAnswered, setIsAnswered } = useContext(ScoreContext);
   const { openModal, setOpenModal } = useContext(ModalContext);
+  const { index } = useContext(QuestionContext);
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [buttonColors, setButtonColors] = useState(
@@ -38,7 +40,7 @@ const QuestionCard = ({ data }) => {
     setIsAnswered(false);
     // Reset button colors
     setButtonColors(Array(data.options.length).fill(""));
-  }, [data]); // Trigger the effect when the data prop changes
+  }, [index]); // Trigger the effect when the data prop changes
 
   const renderedItems = data.options.map((number, index) => (
     <button

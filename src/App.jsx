@@ -7,12 +7,12 @@ import { ScoreContext } from "./context/ScoreContext";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { ModalContext } from "./context/ModalContext";
+import { QuestionContext } from "./context/QuestionContext";
 
 function App() {
   const { score, isAnswered } = useContext(ScoreContext);
-  const { openModal, setOpenModal } = useContext(ModalContext);
-
-  const [index, setIndex] = useState(0);
+  const { openModal } = useContext(ModalContext);
+  const { index, setIndex } = useContext(QuestionContext);
   const [init, setInit] = useState(false);
 
   useEffect(() => {

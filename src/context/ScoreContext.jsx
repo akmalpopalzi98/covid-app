@@ -1,6 +1,6 @@
 import { Children, createContext, useState } from "react";
 
-const ScoreContext = createContext(0);
+const ScoreContext = createContext();
 
 const ScoreProvider = ({ children }) => {
   const [score, setScore] = useState(0);
