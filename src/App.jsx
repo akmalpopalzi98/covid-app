@@ -7,10 +7,12 @@ import { ScoreContext } from "./context/ScoreContext";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { ModalContext } from "./context/ModalContext";
+import Start from "./components/Start";
 
 function App() {
   const { score, isAnswered } = useContext(ScoreContext);
   const { openModal, setOpenModal } = useContext(ModalContext);
+  const [isStart, setIsStart] = useState(true);
 
   const [index, setIndex] = useState(0);
   const [init, setInit] = useState(false);
@@ -165,6 +167,7 @@ function App() {
           }}
         >
           <QuestionCard data={data[index]} />
+          {isStart && <Start setIsStart={setIsStart} />}
           <div
             style={{
               position: "absolute",
