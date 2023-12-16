@@ -133,7 +133,7 @@ function App() {
       <h1
         style={{
           padding: "10px",
-          backgroundColor: "#e5b966",
+          color: "white",
           position: "relative",
           zIndex: 2,
         }}

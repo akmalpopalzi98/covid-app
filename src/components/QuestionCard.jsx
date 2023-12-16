@@ -6,39 +6,48 @@ const QuestionCard = ({ data }) => {
   const { setScore, isAnswered, setIsAnswered } = useContext(ScoreContext);
   const [openModal, setOpenModal] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
-  const optionslist = [data.answer, ...data.options];
+  const [buttonColors, setButtonColors] = useState(
+    Array(data.options.length).fill("")
+  ); // Initialize colors array
 
-  const onSelect = (event, number) => {
+  const onSelect = (event, number, index) => {
     setIsAnswered(true);
     setOpenModal(true);
     const clickedButton = event.target;
+
+    // Create a copy of the buttonColors array to update the state
+    const newButtonColors = [...buttonColors];
+
     if (number === data.answer) {
       setScore((prevScore) => prevScore + 1);
       setIsCorrect(true);
-      clickedButton.style.backgroundColor = "green";
+      newButtonColors[index] = "green";
     } else {
-      clickedButton.style.backgroundColor = "red";
+      newButtonColors[index] = "red";
       setIsCorrect(false);
     }
+
+    // Update the state with the new button colors
+    setButtonColors(newButtonColors);
   };
 
   useEffect(() => {
     // Reset the isAnswered state when a new question is rendered
     setIsAnswered(false);
-    const buttonElement = (document.getElementById(
-      "answer-btn"
-    ).style.backgroundColor = "");
+    // Reset button colors
+    setButtonColors(Array(data.options.length).fill(""));
   }, [data]); // Trigger the effect when the data prop changes
-  const renderedItems = optionslist.map((number, index) => (
+
+  const renderedItems = data.options.map((number, index) => (
     <button
-      id="answer-btn"
       key={index}
       style={{
         height: "90%",
         width: "20%",
+        backgroundColor: buttonColors[index],
       }}
       onClick={(event) => {
-        onSelect(event, number);
+        onSelect(event, number, index);
       }}
       disabled={isAnswered}
     >
@@ -75,7 +84,7 @@ const QuestionCard = ({ data }) => {
         {openModal && (
           <Modal
             detail={data.detail}
-            onExit={setOpenModal}
+            onExit={() => setOpenModal(false)}
             correctStatus={isCorrect}
           />
         )}
