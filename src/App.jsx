@@ -159,6 +159,7 @@ function App() {
             width: "80%",
             height: "80%",
             backgroundColor: "rgba(131, 145, 146,0.6)",
+
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -166,6 +167,24 @@ function App() {
             position: "relative",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              top: 2,
+              left: 3,
+              width: "70px", // Adjust the size as needed
+              height: "40px", // Adjust the size as needed
+              borderRadius: "6px",
+              backgroundColor: "purple", // Set the background color
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white", // Set the text color
+              fontWeight: "bold",
+            }}
+          >
+            TIMER
+          </div>
           <QuestionCard data={data[index]} />
           {isStart && <Start setIsStart={setIsStart} />}
           <div
