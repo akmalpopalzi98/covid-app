@@ -3,6 +3,7 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/quiz" element={<MainPage />} />
+        <Route path="/feedback" element={<Feedback />} />
       </Routes>
     </div>
   );
