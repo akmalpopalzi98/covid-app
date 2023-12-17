@@ -8,6 +8,7 @@ import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSl
 import { ModalContext } from "../context/ModalContext";
 import { QuestionContext } from "../context/QuestionContext";
 import { TiArrowRightOutline } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 function MainPage() {
   const { score, isAnswered } = useContext(ScoreContext);
@@ -15,6 +16,7 @@ function MainPage() {
   const { index, setIndex } = useContext(QuestionContext);
   const [init, setInit] = useState(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
@@ -43,6 +45,7 @@ function MainPage() {
       } else {
         // Optionally, handle the case when there are no more questions
         console.log("No more questions available");
+        navigate("/feedback");
       }
     } else {
       // Optionally, handle the case when the current question hasn't been answered
@@ -215,6 +218,7 @@ function MainPage() {
               alignItems: "center",
               color: "black", // Set the text color
               fontWeight: "bold",
+              backgroundColor: " #45b39d ",
             }}
             onClick={nextQuestion}
             disabled={openModal}
