@@ -4,7 +4,6 @@ import { useState } from "react";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [init, setInit] = useState(false);
 
   const navigate = useNavigate();
 

@@ -7,6 +7,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { ModalContext } from "../context/ModalContext";
 import { QuestionContext } from "../context/QuestionContext";
+import { TiArrowRightOutline } from "react-icons/ti";
 
 function MainPage() {
   const { score, isAnswered } = useContext(ScoreContext);
@@ -45,7 +46,7 @@ function MainPage() {
       }
     } else {
       // Optionally, handle the case when the current question hasn't been answered
-      console.log("Please answer the current question");
+      alert("Please answer the current question");
     }
   };
 
@@ -169,8 +170,8 @@ function MainPage() {
               position: "absolute",
               top: 2,
               right: 3,
-              width: "70px", // Adjust the size as needed
-              height: "40px", // Adjust the size as needed
+              width: "10%", // Adjust the size as needed
+              height: "8%", // Adjust the size as needed
               borderRadius: "6px",
               backgroundColor: "purple", // Set the background color
               display: "flex",
@@ -182,13 +183,31 @@ function MainPage() {
           >
             Score: {score}
           </div>
+          <div
+            style={{
+              position: "absolute",
+              top: 2,
+              left: 3,
+              width: "10%", // Adjust the size as needed
+              height: "8%", // Adjust the size as needed
+              borderRadius: "6px",
+              backgroundColor: "purple", // Set the background color
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white", // Set the text color
+              fontWeight: "bold",
+            }}
+          >
+            Question: {index + 1}/{data.length}
+          </div>
           <button
             style={{
               position: "absolute",
               bottom: 0,
               right: 0,
-              width: "70px", // Adjust the size as needed
-              height: "40px", // Adjust the size as needed
+              width: "10%", // Adjust the size as needed
+              height: "8%", // Adjust the size as needed
               margin: "10px",
               borderRadius: "6px",
               display: "flex",
@@ -200,7 +219,7 @@ function MainPage() {
             onClick={nextQuestion}
             disabled={openModal}
           >
-            Next
+            <TiArrowRightOutline />
           </button>
         </div>
       </div>
