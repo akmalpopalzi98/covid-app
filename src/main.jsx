@@ -4,15 +4,18 @@ import App from "./App.jsx";
 import { ScoreProvider } from "./context/ScoreContext.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
 import { QuestionProvider } from "./context/QuestionContext.jsx";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <QuestionProvider>
-      <ModalProvider>
-        <ScoreProvider>
-          <App />
-        </ScoreProvider>
-      </ModalProvider>
-    </QuestionProvider>
+    <BrowserRouter>
+      <QuestionProvider>
+        <ModalProvider>
+          <ScoreProvider>
+            <App />
+          </ScoreProvider>
+        </ModalProvider>
+      </QuestionProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
