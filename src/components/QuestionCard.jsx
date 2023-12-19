@@ -14,15 +14,14 @@ const QuestionCard = ({ data }) => {
     Array(data.options.length).fill("")
   ); // Initialize colors array
 
-  const onSelect = (event, number, index) => {
+  const onSelect = (option, index) => {
     setIsAnswered(true);
     setOpenModal(true);
-    const clickedButton = event.target;
 
     // Create a copy of the buttonColors array to update the state
     const newButtonColors = [...buttonColors];
 
-    if (number === data.answer) {
+    if (option === data.answer) {
       setScore((prevScore) => prevScore + 1);
       setIsCorrect(true);
       newButtonColors[index] = "green";
@@ -42,20 +41,20 @@ const QuestionCard = ({ data }) => {
     setButtonColors(Array(data.options.length).fill(""));
   }, [index]); // Trigger the effect when the data prop changes
 
-  const renderedItems = data.options.map((number, index) => (
+  const renderedItems = data.options.map((option, i) => (
     <button
-      key={index}
+      key={i}
       style={{
-        height: "90%",
+        height: "70%",
         width: "20%",
-        backgroundColor: buttonColors[index],
+        backgroundColor: buttonColors[i],
       }}
-      onClick={(event) => {
-        onSelect(event, number, index);
+      onClick={() => {
+        onSelect(option, i);
       }}
       disabled={isAnswered}
     >
-      {number}
+      {option}
     </button>
   ));
 
@@ -70,7 +69,7 @@ const QuestionCard = ({ data }) => {
         position: "relative",
       }}
     >
-      <h1 style={{ textAlign: "center", paddingTop: "10px" }}>
+      <h1 style={{ textAlign: "center", paddingTop: "10px", fontSize: "20px" }}>
         {data.question}
       </h1>
 
