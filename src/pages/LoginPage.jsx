@@ -1,17 +1,63 @@
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AuthenticationContext } from "../context/Authenticate";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    username,
+    password,
+    setUsername,
+    setPassword,
+    loggedIn,
+    setLoggedIn,
+  } = useContext(AuthenticationContext);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("access_token");
+    if (storedToken) {
+      navigate("/quiz");
+    }
+  }, []);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const authenticate = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+
+      const response = await axios.post(
+        "http://127.0.0.1:8000/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.data.access_token) {
+        localStorage.setItem("access_token", response.data.access_token);
+        setLoggedIn(true);
+        navigate("/quiz");
+      }
+    } catch (error) {
+      console.log(error);
+      setLoggedIn(false);
+      throw error;
+    }
+  };
+
+  const handleLogin = async (e) => {
     // Add your authentication logic here
     e.preventDefault();
-    console.log("Logging in with:", { username });
-    navigate("/quiz");
+    try {
+      const result = await authenticate();
+    } catch (error) {
+      console.log(error);
+      alert("Invalid Login Credentials");
+    }
   };
 
   return (
@@ -41,7 +87,7 @@ const LoginPage = () => {
 
       {/* Link to CreateAccountPage */}
       <p style={styles.createAccount}>
-        Don't have an account?{" "}
+        Don't have an account?
         <RouterLink to="/create-account" style={styles.link}>
           Create an account
         </RouterLink>

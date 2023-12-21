@@ -9,6 +9,7 @@ import { ModalContext } from "../context/ModalContext";
 import { QuestionContext } from "../context/QuestionContext";
 import { TiArrowRightOutline } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+import LogOut from "../components/LogOut";
 
 function MainPage() {
   const { score, isAnswered } = useContext(ScoreContext);
@@ -136,6 +137,8 @@ function MainPage() {
         particlesLoaded={particlesLoaded}
         options={options}
       />
+
+      <LogOut />
       <h1
         style={{
           padding: "10px",
