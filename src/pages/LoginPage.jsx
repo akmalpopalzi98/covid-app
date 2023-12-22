@@ -2,6 +2,7 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthenticationContext } from "../context/Authenticate";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const LoginPage = () => {
   const {
@@ -12,6 +13,7 @@ const LoginPage = () => {
     loggedIn,
     setLoggedIn,
   } = useContext(AuthenticationContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
@@ -24,6 +26,7 @@ const LoginPage = () => {
 
   const authenticate = async () => {
     try {
+      setIsLoading(true);
       const formData = new FormData();
       formData.append("username", username);
       formData.append("password", password);
@@ -45,6 +48,7 @@ const LoginPage = () => {
     } catch (error) {
       console.log(error);
       setLoggedIn(false);
+      setIsLoading(false);
       throw error;
     }
   };
@@ -53,7 +57,9 @@ const LoginPage = () => {
     // Add your authentication logic here
     e.preventDefault();
     try {
-      const result = await authenticate();
+      await authenticate();
+      setUsername("");
+      setPassword("");
     } catch (error) {
       console.log(error);
       alert("Invalid Login Credentials");
@@ -83,12 +89,14 @@ const LoginPage = () => {
           />
         </label>
         <button style={styles.button}>Login</button>
+        <div style={styles.loading}>{isLoading && <CircularProgress />}</div>
       </form>
 
       {/* Link to CreateAccountPage */}
       <p style={styles.createAccount}>
         Don't have an account?
         <RouterLink to="/create-account" style={styles.link}>
+          {" "}
           Create an account
         </RouterLink>
       </p>
@@ -146,6 +154,11 @@ const styles = {
     color: "blue",
     textDecoration: "underline",
     cursor: "pointer",
+  },
+  loading: {
+    display: "flex",
+    justifyContent: "center",
+    padding: "20px",
   },
 };
 

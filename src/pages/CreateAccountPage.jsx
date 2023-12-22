@@ -1,26 +1,91 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { AuthenticationContext } from "../context/Authenticate";
+import axios from "axios";
 
 const CreateAccountPage = () => {
-  const [newUsername, setNewUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const {
+    newUsername,
+    newPassword,
+    setNewPassword,
+    setNewUsername,
+    name,
+    setName,
+    accountCreated,
+    setAccountCreated,
+  } = useContext(AuthenticationContext);
+
+  const [notification, setNotification] = useState("");
 
   const navigate = useNavigate();
 
-  const handleCreateAccount = (e) => {
-    // Add your account creation logic here
-    e.preventDefault();
-    console.log("Creating account with:", { newUsername });
-    navigate("/login");
-    // You can navigate to a success page or perform other actions as needed
+  const data = {
+    name: name,
+    email: newUsername,
+    password: newPassword,
   };
+
+  const createAccount = async () => {
+    try {
+      const request = await axios.post("http://127.0.0.1:8000/users", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(request);
+      setAccountCreated(true);
+      setNotification("Account Created Successfully!");
+    } catch (error) {
+      console.log(error);
+      setAccountCreated(false);
+      setNotification(
+        "Account Creation Failed. Email Is Invalid or Already Exists. Please Try Again."
+      );
+    }
+  };
+
+  const handleCreateAccount = async (e) => {
+    e.preventDefault();
+    await createAccount();
+    setName("");
+    setNewUsername("");
+    setNewPassword("");
+  };
+  // Show notification for a few seconds (adjust as needed)
+  setTimeout(() => {
+    setNotification("");
+    setAccountCreated(false);
+  }, 9000); // 5000 milliseconds (5 seconds)
 
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>Create Account</h2>
+      {notification && (
+        <div
+          style={{
+            backgroundColor: accountCreated ? "green" : "red",
+            color: "white",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "4px",
+          }}
+        >
+          {notification}
+        </div>
+      )}
       <form style={styles.form} onSubmit={handleCreateAccount}>
         <label style={styles.label}>
-          Please enter a valid email address
+          Please enter your name
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={styles.input}
+          />
+        </label>
+        <label style={styles.label}>
+          Enter a valid email address
           <input
             type="text"
             value={newUsername}
@@ -29,7 +94,7 @@ const CreateAccountPage = () => {
           />
         </label>
         <label style={styles.label}>
-          Please enter a secure password for your account
+          Create Password
           <input
             type="password"
             value={newPassword}
@@ -42,6 +107,7 @@ const CreateAccountPage = () => {
       <p style={styles.loginLink}>
         Already have an account?
         <RouterLink to="/login" style={styles.link}>
+          {" "}
           Login
         </RouterLink>
       </p>
