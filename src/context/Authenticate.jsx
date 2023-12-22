@@ -11,6 +11,7 @@ const AuthenticationProvider = ({ children }) => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [name, setName] = useState("");
+  const [profileName, setProfileName] = useState("");
 
   const sharedValue = {
     username,

@@ -15,6 +15,7 @@ class UserOut(BaseModel):
     email:EmailStr
     id : int
     created_at: datetime
+    name: str
 
 
     class Config:
@@ -24,3 +25,4 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    name: str

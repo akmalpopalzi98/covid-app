@@ -10,8 +10,9 @@ const LoginPage = () => {
     password,
     setUsername,
     setPassword,
-    loggedIn,
     setLoggedIn,
+    profileName,
+    setProfileName,
   } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,6 +41,7 @@ const LoginPage = () => {
           },
         }
       );
+      console.log(response);
       if (response.data.access_token) {
         localStorage.setItem("access_token", response.data.access_token);
         setLoggedIn(true);
