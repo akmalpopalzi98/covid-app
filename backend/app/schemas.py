@@ -3,6 +3,7 @@ from pydantic import BaseModel, EmailStr
 
 class UserCreate(BaseModel):
     email: EmailStr
+    name: str
     password: str
     
 class UserLogin(BaseModel):
@@ -17,7 +18,7 @@ class UserOut(BaseModel):
 
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Token(BaseModel):
