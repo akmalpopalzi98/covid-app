@@ -179,7 +179,7 @@ function MainPage() {
               width: "10%", // Adjust the size as needed
               height: "8%", // Adjust the size as needed
               borderRadius: "6px",
-              backgroundColor: "purple", // Set the background color
+              backgroundColor: " #a93226 ", // Set the background color
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
