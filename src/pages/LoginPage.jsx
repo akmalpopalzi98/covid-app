@@ -17,6 +17,7 @@ const LoginPage = () => {
   } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
@@ -24,8 +25,6 @@ const LoginPage = () => {
       navigate("/quiz");
     }
   }, []);
-
-  const navigate = useNavigate();
 
   const authenticate = async () => {
     try {
@@ -47,7 +46,7 @@ const LoginPage = () => {
       if (response.data.access_token) {
         localStorage.setItem("access_token", response.data.access_token);
         setLoggedIn(true);
-        navigate("/quiz");
+        navigate("/welcome");
       }
     } catch (error) {
       setLoggedIn(false);
