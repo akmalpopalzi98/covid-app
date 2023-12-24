@@ -11,10 +11,12 @@ const LoginPage = () => {
     setUsername,
     setPassword,
     setLoggedIn,
+    loggedIn,
     profileName,
     setProfileName,
   } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
@@ -48,8 +50,8 @@ const LoginPage = () => {
         navigate("/quiz");
       }
     } catch (error) {
-      console.log(error);
       setLoggedIn(false);
+      setNotification("Incorrect Credentials. Please Try Again.");
       setIsLoading(false);
       throw error;
     }
@@ -64,13 +66,29 @@ const LoginPage = () => {
       setPassword("");
     } catch (error) {
       console.log(error);
-      alert("Invalid Login Credentials");
     }
   };
+
+  setTimeout(() => {
+    setNotification("");
+  }, 5000);
 
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>Login</h2>
+      {notification && (
+        <div
+          style={{
+            backgroundColor: !loggedIn ? "red" : "",
+            color: "white",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "4px",
+          }}
+        >
+          {notification}
+        </div>
+      )}
       <form style={styles.form} onSubmit={handleLogin}>
         <label style={styles.label}>
           Username
