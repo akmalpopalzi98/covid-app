@@ -33,6 +33,8 @@ const styles = {
   container: {
     textAlign: "center",
     padding: "20px",
+    border: "2px solid #ccc", // Add border styling here
+    borderRadius: "10px", // Add border-radius for rounded corners
   },
   heading: {
     fontSize: "24px",
