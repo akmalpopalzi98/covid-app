@@ -5,14 +5,13 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Feedback from "./pages/Feedback";
 import LandingPage from "./pages/LandingPage";
-
 import CreateAccountPage from "./pages/CreateAccountPage";
 
 function App() {
   const navigate = useNavigate();
   useEffect(() => {
-    // Redirect to the login page when the app starts
-    navigate("/login");
+    const storedToken = localStorage.getItem("access_token");
+    if (!storedToken) navigate("/login");
   }, []);
   return (
     <div style={{ height: "100vh" }}>
