@@ -11,8 +11,8 @@ const LogOut = () => {
       position: "absolute",
       top: 0,
       right: 3,
-      width: "8%",
-      height: "8%",
+      width: "5%",
+      height: "5%",
       borderRadius: "6px",
       backgroundColor: "#e74c3c", // Adjust the background color
       display: "flex",
