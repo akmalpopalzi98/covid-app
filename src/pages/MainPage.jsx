@@ -4,7 +4,7 @@ import QuestionCard from "../components/QuestionCard";
 import { useContext, useState, useEffect, useMemo } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
+import { loadSlim } from "@tsparticles/slim";
 import { ModalContext } from "../context/ModalContext";
 import { QuestionContext } from "../context/QuestionContext";
 import { TiArrowRightOutline } from "react-icons/ti";
@@ -16,17 +16,13 @@ function MainPage() {
   const { openModal } = useContext(ModalContext);
   const { index, setIndex } = useContext(QuestionContext);
   const [init, setInit] = useState(false);
+  const [finish, setFinish] = useState(false);
+  console.log(index);
 
   const navigate = useNavigate();
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      //await loadAll(engine);
-      //await loadFull(engine);
       await loadSlim(engine);
-      //await loadBasic(engine);
     }).then(() => {
       setInit(true);
     });
@@ -46,6 +42,7 @@ function MainPage() {
       } else {
         // Optionally, handle the case when there are no more questions
         console.log("No more questions available");
+        setFinish(true);
         navigate("/feedback");
       }
     } else {
@@ -194,14 +191,14 @@ function MainPage() {
               position: "absolute",
               top: 2,
               left: 3,
-              width: "10%", // Adjust the size as needed
-              height: "8%", // Adjust the size as needed
+              width: "10%",
+              height: "8%",
               borderRadius: "6px",
-              backgroundColor: "purple", // Set the background color
+              backgroundColor: "purple",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "white", // Set the text color
+              color: "white",
               fontWeight: "bold",
             }}
           >
@@ -212,21 +209,21 @@ function MainPage() {
               position: "absolute",
               bottom: 0,
               right: 0,
-              width: "10%", // Adjust the size as needed
-              height: "8%", // Adjust the size as needed
+              width: "10%",
+              height: "8%",
               margin: "10px",
               borderRadius: "6px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "black", // Set the text color
+              color: "black",
               fontWeight: "bold",
               backgroundColor: " #45b39d ",
             }}
             onClick={nextQuestion}
             disabled={openModal}
           >
-            <TiArrowRightOutline />
+            {index + 1 == data.length ? "Finish" : <TiArrowRightOutline />}
           </button>
         </div>
       </div>

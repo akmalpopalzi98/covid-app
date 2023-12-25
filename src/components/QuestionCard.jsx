@@ -12,7 +12,7 @@ const QuestionCard = ({ data }) => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [buttonColors, setButtonColors] = useState(
     Array(data.options.length).fill("")
-  ); // Initialize colors array
+  );
 
   const onSelect = (option, index) => {
     setIsAnswered(true);
