@@ -11,4 +11,15 @@ class user(Base):
     id = Column(Integer,primary_key = True, nullable = False)
     created_at = Column(TIMESTAMP(timezone=True),nullable = False, server_default = text("NOW()"))
     name = Column(String, nullable=False)
+    scores = relationship("score", back_populates="users")
+
+
+class score(Base):
+    __tablename__ = "user-scores"
+    id = Column(Integer,primary_key=True,nullable=False)
+    user_id = Column(Integer,ForeignKey("covid-users.id",ondelete = "CASCADE"))
+    score = Column(Integer,nullable=False)
+    users = relationship("user",back_populates="scores")
+    
+    
 

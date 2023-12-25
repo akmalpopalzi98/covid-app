@@ -26,3 +26,15 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     name: str
+
+class SubmitScore(BaseModel):
+    score: int
+    user_id: str
+
+
+class UserScoreOut(BaseModel):
+    score: int
+    users: UserOut
+
+    class Config:
+        from_attributes = True
