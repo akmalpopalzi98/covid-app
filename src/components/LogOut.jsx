@@ -2,10 +2,15 @@ import React, { useContext } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { AuthenticationContext } from "../context/Authenticate";
 import { useNavigate } from "react-router-dom";
+import { QuestionContext } from "../context/QuestionContext";
+import { ScoreContext } from "../context/ScoreContext";
 
 const LogOut = () => {
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(AuthenticationContext);
+  const { setIndex } = useContext(QuestionContext);
+  const { setScore } = useContext(ScoreContext);
+
   const styles = {
     button: {
       position: "absolute",
@@ -34,6 +39,8 @@ const LogOut = () => {
 
         localStorage.removeItem("access_token");
         localStorage.removeItem("id");
+        setIndex(0);
+        setScore(0);
       }}
     >
       Log Out
