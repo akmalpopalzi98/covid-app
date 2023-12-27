@@ -39,13 +39,11 @@ function MainPage() {
         // Move to the next question
         setIndex((prevIndex) => prevIndex + 1);
       } else {
-        // Optionally, handle the case when there are no more questions
         console.log("No more questions available");
         setFinish(true);
         navigate("/feedback");
       }
     } else {
-      // Optionally, handle the case when the current question hasn't been answered
       alert("Please answer the current question");
     }
   };
