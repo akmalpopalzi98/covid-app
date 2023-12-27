@@ -17,7 +17,6 @@ function MainPage() {
   const { index, setIndex } = useContext(QuestionContext);
   const [init, setInit] = useState(false);
   const [finish, setFinish] = useState(false);
-  console.log(index);
 
   const navigate = useNavigate();
   useEffect(() => {
