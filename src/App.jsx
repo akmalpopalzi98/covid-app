@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Feedback from "./pages/Feedback";
 import LandingPage from "./pages/LandingPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
+import LeaderBoard from "./pages/Leaderboard";
 
 function App() {
   const navigate = useNavigate();
@@ -18,10 +19,11 @@ function App() {
     <div style={{ height: "100vh" }}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/welcome" element={<LandingPage />} />
         <Route path="/quiz" element={<MainPage />} />
         <Route path="/feedback" element={<Feedback />} />
-        <Route path="/create-account" element={<CreateAccountPage />} />
+        <Route path="/leaderboards" element={<LeaderBoard />} />
       </Routes>
     </div>
   );
