@@ -2,7 +2,93 @@ import React, { useState } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import data from "../questions";
 import { useContext } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import LogOut from "../components/LogOut";
+import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
+
+const Feedback = () => {
+  const { score } = useContext(ScoreContext);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [submitComplete, setSubmitCompelete] = useState(false);
+  const [notification, setNotification] = useState("");
+  const id = localStorage.getItem("id");
+
+  const scoreData = { score, user_id: Number(id) };
+  const scorePercent = ((score / data.length) * 100).toFixed(2);
+
+  let feedbackMessage = "";
+  let feedbackColor = "";
+
+  if (scorePercent >= 80) {
+    feedbackMessage = "Congratulations! You did great!";
+    feedbackColor = "green";
+  } else if (scorePercent >= 60) {
+    feedbackMessage = "Good job! You're on the right track.";
+    feedbackColor = "orange";
+  } else {
+    feedbackMessage = "Keep practicing. You'll improve!";
+    feedbackColor = "red";
+  }
+
+  const submitData = async () => {
+    setIsSubmit(true);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/scores",
+        scoreData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.statusText === "Created") {
+        setNotification("Your Score Has Been Submitted!");
+        setSubmitCompelete(true);
+      } else {
+        setNotification("Failed To Submit. Please Try Again.");
+      }
+    } catch (error) {
+      console.error("Error submitting score:", error);
+      setNotification("An error occurred. Please try again later.");
+    } finally {
+      setIsSubmit(false);
+    }
+  };
+
+  return (
+    <div style={styles.feedbackContainer}>
+      <LogOut />
+      <h1>Your Quiz Result</h1>
+      <div style={{ ...styles.scoreContainer, borderColor: feedbackColor }}>
+        <p style={styles.scoreText}>Score: {scorePercent}%</p>
+      </div>
+      <p style={{ ...styles.feedbackText, color: feedbackColor }}>
+        {feedbackMessage}
+      </p>
+      <div style={styles.buttonContainer}>
+        <button
+          style={styles.submitButton}
+          onClick={submitData}
+          disabled={submitComplete}
+        >
+          {isSubmit ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : (
+            "Submit Score"
+          )}
+        </button>
+        <Link to="/leaderboards" style={styles.leaderboardsButton}>
+          Leaderboards
+        </Link>
+      </div>
+      {notification && <div style={styles.notification}>{notification}</div>}
+    </div>
+  );
+};
+
+export default Feedback;
 
 const styles = {
   feedbackContainer: {
@@ -29,57 +115,36 @@ const styles = {
     marginTop: "20px",
     color: "#333",
   },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "20px",
+  },
   submitButton: {
     padding: "10px",
-    backgroundColor: "#007BFF", // Adjusted button color
+    backgroundColor: "#229954",
     color: "white",
     cursor: "pointer",
     border: "none",
     borderRadius: "5px",
     fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  leaderboardsButton: {
+    padding: "10px",
+    backgroundColor: "#007BFF",
+    color: "white",
+    textDecoration: "none",
+    borderRadius: "5px",
+    fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  notification: {
+    marginTop: "10px",
+    color: "#333",
   },
 };
-
-const Feedback = () => {
-  const { score } = useContext(ScoreContext);
-  const scorePercent = ((score / data.length) * 100).toFixed(2);
-
-  let feedbackMessage = "";
-  let feedbackColor = "";
-
-  // Customize feedback based on the score
-  if (scorePercent >= 80) {
-    feedbackMessage = "Congratulations! You did great!";
-    feedbackColor = "green";
-  } else if (scorePercent >= 60) {
-    feedbackMessage = "Good job! You're on the right track.";
-    feedbackColor = "orange";
-  } else {
-    feedbackMessage = "Keep practicing. You'll improve!";
-    feedbackColor = "red";
-  }
-
-  const handleScoreSubmission = () => {
-    // You can implement the logic for submitting the score here
-    console.log("Score submitted:", score);
-    // Add additional logic as needed
-  };
-
-  return (
-    <div style={styles.feedbackContainer}>
-      <LogOut />
-      <h1>Your Quiz Result</h1>
-      <div style={{ ...styles.scoreContainer, borderColor: feedbackColor }}>
-        <p style={styles.scoreText}>Score: {scorePercent}%</p>
-      </div>
-      <p style={{ ...styles.feedbackText, color: feedbackColor }}>
-        {feedbackMessage}
-      </p>
-      <button style={styles.submitButton} onClick={handleScoreSubmission}>
-        Submit Score
-      </button>
-    </div>
-  );
-};
-
-export default Feedback;
