@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import data from "../questions";
 import { useContext } from "react";
@@ -29,6 +29,15 @@ const styles = {
     marginTop: "20px",
     color: "#333",
   },
+  submitButton: {
+    padding: "10px",
+    backgroundColor: "#007BFF", // Adjusted button color
+    color: "white",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "5px",
+    fontSize: "16px",
+  },
 };
 
 const Feedback = () => {
@@ -50,6 +59,12 @@ const Feedback = () => {
     feedbackColor = "red";
   }
 
+  const handleScoreSubmission = () => {
+    // You can implement the logic for submitting the score here
+    console.log("Score submitted:", score);
+    // Add additional logic as needed
+  };
+
   return (
     <div style={styles.feedbackContainer}>
       <LogOut />
@@ -60,7 +75,9 @@ const Feedback = () => {
       <p style={{ ...styles.feedbackText, color: feedbackColor }}>
         {feedbackMessage}
       </p>
-      <div>Leaderboard</div>
+      <button style={styles.submitButton} onClick={handleScoreSubmission}>
+        Submit Score
+      </button>
     </div>
   );
 };

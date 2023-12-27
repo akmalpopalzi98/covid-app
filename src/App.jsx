@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
     if (!storedToken) navigate("/login");
+    console.log(storedToken);
   }, []);
   return (
     <div style={{ height: "100vh" }}>

@@ -25,11 +25,11 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
-    name: str
+    id: int
 
 class SubmitScore(BaseModel):
     score: int
-    user_id: str
+    user_id: int
 
 
 class UserScoreOut(BaseModel):

@@ -45,6 +45,7 @@ const LoginPage = () => {
       console.log(response);
       if (response.data.access_token) {
         localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("username", response.data.id);
         setLoggedIn(true);
         navigate("/welcome");
       }

@@ -33,6 +33,7 @@ const LogOut = () => {
         navigate("/login");
 
         localStorage.removeItem("access_token");
+        localStorage.removeItem("id");
       }}
     >
       Log Out

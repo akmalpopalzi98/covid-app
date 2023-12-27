@@ -22,4 +22,4 @@ def login(payload: OAuth2PasswordRequestForm = Depends(), db:Session = Depends(g
     if not compare_hash(payload.password,user.password):
         raise HTTPException(status_code=status.HTTP_403_NOT_FOUND, detail="Invalid credentials")
     access_token = create_token(data={"user_id":user.id})
-    return {"access_token": access_token, "token_type":"bearer","name":user.name}
+    return {"access_token": access_token, "token_type":"bearer","id":user.id}
