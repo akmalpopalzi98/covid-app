@@ -34,7 +34,7 @@ class SubmitScore(BaseModel):
 
 class UserScoreOut(BaseModel):
     score: int
-    users: UserOut
+    user: UserOut
 
     class Config:
         from_attributes = True
@@ -42,8 +42,8 @@ class UserScoreOut(BaseModel):
 
 class AllScores(BaseModel):
     score: int
-    users: UserOut
-    
+    user: UserOut
+
     class Config:
         from_attributes = True
     
