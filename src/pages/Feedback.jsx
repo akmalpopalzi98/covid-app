@@ -57,7 +57,10 @@ const Feedback = () => {
     }
   };
 
-  const getScores = async () => {};
+  const getScores = async () => {
+    const scores = await axios.get("http://127.0.0.1:8000/scores/leaderboard");
+    console.log(scores);
+  };
 
   return (
     <div style={styles.feedbackContainer}>
@@ -81,7 +84,9 @@ const Feedback = () => {
             "Submit Score"
           )}
         </button>
-        <button style={styles.leaderboardsButton}>Leaderboards</button>
+        <button style={styles.leaderboardsButton} onClick={getScores}>
+          Leaderboards
+        </button>
       </div>
       {notification && <div style={styles.notification}>{notification}</div>}
     </div>
