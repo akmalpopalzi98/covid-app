@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { ScoreContext } from "../context/ScoreContext";
 import data from "../questions";
 import { useContext } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
 import LogOut from "../components/LogOut";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 const Feedback = () => {
   const { score } = useContext(ScoreContext);
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [submitComplete, setSubmitCompelete] = useState(false);
   const [notification, setNotification] = useState("");
+  const [allScores, setAllScores] = useState([]);
   const id = localStorage.getItem("id");
 
   const scoreData = { score, user_id: Number(id) };
@@ -32,7 +32,7 @@ const Feedback = () => {
   }
 
   const submitData = async () => {
-    setIsSubmit(true);
+    setIsLoading(true);
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/scores",
@@ -57,6 +57,8 @@ const Feedback = () => {
     }
   };
 
+  const getScores = async () => {};
+
   return (
     <div style={styles.feedbackContainer}>
       <LogOut />
@@ -73,7 +75,7 @@ const Feedback = () => {
           onClick={submitData}
           disabled={submitComplete}
         >
-          {isSubmit ? (
+          {isLoading ? (
             <CircularProgress size={20} color="inherit" />
           ) : (
             "Submit Score"
