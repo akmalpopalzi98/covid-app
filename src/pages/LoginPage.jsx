@@ -12,8 +12,6 @@ const LoginPage = () => {
     setPassword,
     setLoggedIn,
     loggedIn,
-    profileName,
-    setProfileName,
   } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState("");
