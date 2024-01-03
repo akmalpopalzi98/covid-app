@@ -38,3 +38,12 @@ class UserScoreOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class AllScores(BaseModel):
+    score: int
+    users: UserOut
+    
+    class Config:
+        from_attributes = True
+    
