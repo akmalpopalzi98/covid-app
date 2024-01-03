@@ -79,9 +79,7 @@ const Feedback = () => {
             "Submit Score"
           )}
         </button>
-        <Link to="/leaderboards" style={styles.leaderboardsButton}>
-          Leaderboards
-        </Link>
+        <button style={styles.leaderboardsButton}>Leaderboards</button>
       </div>
       {notification && <div style={styles.notification}>{notification}</div>}
     </div>
@@ -134,9 +132,10 @@ const styles = {
   },
   leaderboardsButton: {
     padding: "10px",
-    backgroundColor: "#007BFF",
+    backgroundColor: " #7f8c8d",
     color: "white",
-    textDecoration: "none",
+    cursor: "pointer",
+    border: "none",
     borderRadius: "5px",
     fontSize: "16px",
     display: "flex",
