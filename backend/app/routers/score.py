@@ -19,7 +19,10 @@ def add_score(payload: SubmitScore, db:Session = Depends(get_db)):
      db.refresh(new_score)
      return new_score
 
-@router.get("/scores/leaderboard",status_code=status.HTTP_200_OK, response_model=List[AllScores])
+@router.get("/scores/leaderboard",status_code=status.HTTP_200_OK,response_model=List[AllScores])
 def get_scores(db:Session = Depends(get_db)):
      scores_query = db.query(models.score).all()
      return scores_query
+
+
+# response_model=List[AllScores]

@@ -46,20 +46,20 @@ const Feedback = () => {
       if (response.statusText === "Created") {
         setNotification("Your Score Has Been Submitted!");
         setSubmitCompelete(true);
+        setIsLoading(false);
       } else {
         setNotification("Failed To Submit. Please Try Again.");
       }
     } catch (error) {
       console.error("Error submitting score:", error);
       setNotification("An error occurred. Please try again later.");
-    } finally {
-      setIsSubmit(false);
+      setIsLoading(false);
     }
   };
 
   const getScores = async () => {
     const scores = await axios.get("http://127.0.0.1:8000/scores/leaderboard");
-    console.log(scores);
+    setAllScores(scores.data);
   };
 
   return (
