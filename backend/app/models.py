@@ -18,6 +18,7 @@ class score(Base):
     __tablename__ = "user-scores"
     id = Column(Integer,primary_key=True,nullable=False)
     user_id = Column(Integer,ForeignKey("covid-users.id",ondelete = "CASCADE"))
+    created_at = Column(TIMESTAMP(timezone=True),nullable = False, server_default = text("NOW()"))
     score = Column(Integer,nullable=False)
     users = relationship("user",back_populates="scores")
     

@@ -42,6 +42,8 @@ class UserScoreOut(BaseModel):
 
 class AllScores(BaseModel):
     score: int
+    id: int
+    created_at: datetime
     users: UserOut
 
     class Config:

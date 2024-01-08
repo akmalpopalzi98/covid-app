@@ -2,6 +2,7 @@ from typing import List
 from fastapi import Depends
 from .. import models
 from ..database import get_db
+from sqlalchemy import desc
 from ..schemas import AllScores, SubmitScore, UserScoreOut
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException, Depends, APIRouter
@@ -21,7 +22,7 @@ def add_score(payload: SubmitScore, db:Session = Depends(get_db)):
 
 @router.get("/scores/leaderboard",status_code=status.HTTP_200_OK,response_model=List[AllScores])
 def get_scores(db:Session = Depends(get_db)):
-     scores_query = db.query(models.score).all()
+     scores_query = db.query(models.score).order_by(models.score.score.desc())
      return scores_query
 
 
