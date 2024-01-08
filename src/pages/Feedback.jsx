@@ -3,15 +3,16 @@ import { ScoreContext } from "../context/ScoreContext";
 import data from "../questions";
 import { useContext } from "react";
 import LogOut from "../components/LogOut";
+import ScoresTable from "../components/ScoresTable";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 const Feedback = () => {
   const { score } = useContext(ScoreContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [submitComplete, setSubmitCompelete] = useState(false);
   const [notification, setNotification] = useState("");
   const [allScores, setAllScores] = useState([]);
+  const [showTable, setShowTable] = useState(false);
   const id = localStorage.getItem("id");
 
   const scoreData = { score, user_id: Number(id) };
@@ -45,8 +46,10 @@ const Feedback = () => {
       );
       if (response.statusText === "Created") {
         setNotification("Your Score Has Been Submitted!");
-        setSubmitCompelete(true);
         setIsLoading(false);
+        setShowTable(true);
+        // Fetch leaderboard data after submitting the score
+        getScores();
       } else {
         setNotification("Failed To Submit. Please Try Again.");
       }
@@ -58,8 +61,18 @@ const Feedback = () => {
   };
 
   const getScores = async () => {
-    const scores = await axios.get("http://127.0.0.1:8000/scores/leaderboard");
-    setAllScores(scores.data);
+    setIsLoading(true);
+    try {
+      const scores = await axios.get(
+        "http://127.0.0.1:8000/scores/leaderboard"
+      );
+      setAllScores(scores.data);
+    } catch (error) {
+      console.error("Error loading leaderboard:", error);
+      setNotification("Error loading leaderboard. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -76,7 +89,7 @@ const Feedback = () => {
         <button
           style={styles.submitButton}
           onClick={submitData}
-          disabled={submitComplete}
+          disabled={showTable}
         >
           {isLoading ? (
             <CircularProgress size={20} color="inherit" />
@@ -84,11 +97,9 @@ const Feedback = () => {
             "Submit Score"
           )}
         </button>
-        <button style={styles.leaderboardsButton} onClick={getScores}>
-          Leaderboards
-        </button>
       </div>
       {notification && <div style={styles.notification}>{notification}</div>}
+      <div>{showTable && <ScoresTable allScores={allScores} />}</div>
     </div>
   );
 };
